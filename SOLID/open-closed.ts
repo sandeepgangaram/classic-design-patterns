@@ -35,7 +35,7 @@ const products: Product[] = [apple, fridge, table];
 
 interface FilterSpecification {
   spec: string;
-  isSatisfied(item: any): boolean;
+  isSatisfied(item: Product): boolean;
 }
 
 class ColorSpecification implements FilterSpecification {
@@ -45,7 +45,7 @@ class ColorSpecification implements FilterSpecification {
     this.spec = color;
   }
 
-  isSatisfied(item: any): boolean {
+  isSatisfied(item: Product): boolean {
     return item.color === this.spec;
   }
 }
@@ -57,13 +57,13 @@ class SizeSpecification implements FilterSpecification {
     this.spec = size;
   }
 
-  isSatisfied(item: any): boolean {
+  isSatisfied(item: Product): boolean {
     return item.size === this.spec;
   }
 }
 
 class BetterFilter {
-  filter(items, spec) {
+  filter(items: Product[], spec: FilterSpecification) {
     return items.filter((x) => spec.isSatisfied(x));
   }
 }
