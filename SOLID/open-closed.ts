@@ -63,8 +63,20 @@ class SizeSpecification implements FilterSpecification {
 }
 
 class BetterFilter {
-  filter(items: Product[], spec: FilterSpecification) {
+  filter(items: Product[], spec: FilterSpecification | AndSpecification) {
     return items.filter((x) => spec.isSatisfied(x));
+  }
+}
+
+class AndSpecification {
+  specs: FilterSpecification[];
+
+  constructor(...specs: FilterSpecification[]) {
+    this.specs = specs;
+  }
+
+  isSatisfied(item: Product) {
+    return this.specs.every((x) => x.isSatisfied(item));
   }
 }
 
@@ -78,4 +90,15 @@ console.log("********");
 
 for (let p of bf.filter(products, new SizeSpecification(Size.LARGE))) {
   console.log(`Only Large : ${p.name}`);
+}
+
+console.log("********");
+
+const multiSpec = new AndSpecification(
+  new ColorSpecification(Color.GREEN),
+  new SizeSpecification(Size.LARGE)
+);
+
+for (let p of bf.filter(products, multiSpec)) {
+  console.log(`Both Large and Green : ${p.name}`);
 }
