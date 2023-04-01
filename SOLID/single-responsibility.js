@@ -29,6 +29,11 @@ class Journal {
 }
 
 class PersistenceManager {
+  constructor() {
+    if (!fs.existsSync(path.resolve(__dirname, "dist"))) {
+      fs.mkdirSync(path.resolve(__dirname, "dist"));
+    }
+  }
   saveToFile(journal, filename) {
     fs.writeFileSync(filename, journal.showAllEntries());
   }
@@ -41,4 +46,4 @@ journal.addEntry("Relax!");
 console.log(journal.showAllEntries());
 
 const pManager = new PersistenceManager();
-pManager.saveToFile(journal, path.resolve(__dirname, "output/journal.txt"));
+pManager.saveToFile(journal, path.resolve(__dirname, "dist", "journal.txt"));
