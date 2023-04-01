@@ -3,6 +3,7 @@
 // - meaning you never jump into an existing class and
 //   start modifying it (unless you aboslutely have to - ex:bugfix)
 
+//Constants
 enum Color {
   RED = "red",
   GREEN = "green",
@@ -15,6 +16,7 @@ enum Size {
   LARGE = "large",
 }
 
+//Product Class
 class Product {
   name: string;
   color: string;
@@ -27,17 +29,20 @@ class Product {
   }
 }
 
+//Products Instances
 const apple: Product = new Product("Apple", "green", "small");
 const fridge: Product = new Product("Fridge", "red", "large");
 const table: Product = new Product("Table", "green", "large");
 
 const products: Product[] = [apple, fridge, table];
 
+//Filters
 interface FilterSpecification {
   spec: string;
   isSatisfied(item: Product): boolean;
 }
 
+//Color Filter
 class ColorSpecification implements FilterSpecification {
   spec: string;
 
@@ -50,6 +55,7 @@ class ColorSpecification implements FilterSpecification {
   }
 }
 
+//Size Filter
 class SizeSpecification implements FilterSpecification {
   spec: string;
 
@@ -62,12 +68,14 @@ class SizeSpecification implements FilterSpecification {
   }
 }
 
+//Any Filter
 class BetterFilter {
   filter(items: Product[], spec: FilterSpecification | AndSpecification) {
     return items.filter((x) => spec.isSatisfied(x));
   }
 }
 
+//Adding multiple Filters
 class AndSpecification {
   specs: FilterSpecification[];
 
@@ -80,6 +88,7 @@ class AndSpecification {
   }
 }
 
+//Satisgying Any One Filter
 class OrSpecification {
   specs: FilterSpecification[];
 
@@ -91,6 +100,15 @@ class OrSpecification {
     return this.specs.some((x) => x.isSatisfied(item));
   }
 }
+
+//Filter Instances and Examples
+const redFilter = new ColorSpecification(Color.RED);
+
+for (let p of products.filter((p) => redFilter.isSatisfied(p))) {
+  console.log(`Just Red : ${p.name}`);
+}
+
+console.log("*****");
 
 const bf = new BetterFilter();
 
