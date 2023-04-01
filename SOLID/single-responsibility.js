@@ -1,3 +1,6 @@
+const fs = require("fs");
+const path = require("path");
+
 class Journal {
   constructor() {
     this.entries = {};
@@ -25,9 +28,17 @@ class Journal {
   }
 }
 
+class PersistenceManager {
+  saveToFile(journal, filename) {
+    fs.writeFileSync(filename, journal.showAllEntries());
+  }
+}
 const journal = new Journal();
 
 journal.addEntry("Commit this changes to Github");
 journal.addEntry("Relax!");
 
 console.log(journal.showAllEntries());
+
+const pManager = new PersistenceManager();
+pManager.saveToFile(journal, path.resolve(__dirname, "output/journal.txt"));
