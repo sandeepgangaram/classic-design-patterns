@@ -80,6 +80,18 @@ class AndSpecification {
   }
 }
 
+class OrSpecification {
+  specs: FilterSpecification[];
+
+  constructor(...specs: FilterSpecification[]) {
+    this.specs = specs;
+  }
+
+  isSatisfied(item: Product) {
+    return this.specs.some((x) => x.isSatisfied(item));
+  }
+}
+
 const bf = new BetterFilter();
 
 for (let p of bf.filter(products, new ColorSpecification(Color.GREEN))) {
@@ -101,4 +113,15 @@ const multiSpec = new AndSpecification(
 
 for (let p of bf.filter(products, multiSpec)) {
   console.log(`Both Large and Green : ${p.name}`);
+}
+
+console.log("********");
+
+const anySpec = new OrSpecification(
+  new ColorSpecification(Color.GREEN),
+  new SizeSpecification(Size.LARGE)
+);
+
+for (let p of bf.filter(products, anySpec)) {
+  console.log(`Either Red or Large : ${p.name}`);
 }
