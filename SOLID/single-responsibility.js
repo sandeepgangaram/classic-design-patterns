@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
+//Responsibility - Manage Journal Entries
 class Journal {
   constructor() {
     this.entries = {};
@@ -28,6 +29,7 @@ class Journal {
   }
 }
 
+//Responsibility - Write data to files
 class PersistenceManager {
   constructor() {
     if (!fs.existsSync(path.resolve(__dirname, "dist"))) {
@@ -38,11 +40,10 @@ class PersistenceManager {
     fs.writeFileSync(filename, journal.showAllEntries());
   }
 }
-const journal = new Journal();
 
+const journal = new Journal();
 journal.addEntry("Commit this changes to Github");
 journal.addEntry("Relax!");
-
 console.log(journal.showAllEntries());
 
 const pManager = new PersistenceManager();
