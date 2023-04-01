@@ -27,8 +27,8 @@ class Product {
   }
 }
 
-const apple: Product = new Product("Apple", "red", "small");
-const fridge: Product = new Product("Fridge", "green", "large");
+const apple: Product = new Product("Apple", "green", "small");
+const fridge: Product = new Product("Fridge", "red", "large");
 const table: Product = new Product("Table", "green", "large");
 
 const products: Product[] = [apple, fridge, table];
@@ -50,6 +50,18 @@ class ColorSpecification implements FilterSpecification {
   }
 }
 
+class SizeSpecification implements FilterSpecification {
+  spec: string;
+
+  constructor(size: string) {
+    this.spec = size;
+  }
+
+  isSatisfied(item: any): boolean {
+    return item.size === this.spec;
+  }
+}
+
 class BetterFilter {
   filter(items, spec) {
     return items.filter((x) => spec.isSatisfied(x));
@@ -60,4 +72,10 @@ const bf = new BetterFilter();
 
 for (let p of bf.filter(products, new ColorSpecification(Color.GREEN))) {
   console.log(`Only Green : ${p.name}`);
+}
+
+console.log("********");
+
+for (let p of bf.filter(products, new SizeSpecification(Size.LARGE))) {
+  console.log(`Only Large : ${p.name}`);
 }
