@@ -13,7 +13,7 @@ class Stripe {
     this.user = user;
   }
 
-  makePayment(amountInCents) {
+  makePayment(amountInCents: number) {
     console.log(
       `${this.user} made a payment of $${amountInCents / 100} with Stripe.`
     );
@@ -21,16 +21,41 @@ class Stripe {
 }
 
 class Paypal {
-  makePayment(user, amountInDollars) {
+  makePayment(user: string, amountInDollars: number) {
     console.log(`${user} made payment of $${amountInDollars} with Paypal.`);
   }
 }
 
-abstract class PaymentProcessor {
+//Interface to define the Wrapper Structure
+interface PaymentProcessor {
   user: string;
+  pay: (amount: number) => void;
+}
+
+class StripePaymentProcessor implements PaymentProcessor {
+  user: string;
+  stripe: any;
+
   constructor(user: string) {
     this.user = user;
+    this.stripe = new Stripe(user);
   }
 
-  pay() {}
+  pay(amountInDollars: number) {
+    this.stripe.makePayment(amountInDollars * 100);
+  }
+}
+
+class PaypalPaymentProcessor implements PaymentProcessor {
+  user: string;
+  paypal: any;
+
+  constructor(user: string) {
+    this.user = user;
+    this.paypal = new Paypal();
+  }
+
+  pay(amountInDollars: number) {
+    this.paypal.makePayment(this.user, amountInDollars);
+  }
 }
