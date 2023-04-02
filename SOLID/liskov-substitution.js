@@ -54,5 +54,7 @@ function increaseShapeWidth(shape) {
 }
 
 increaseDimension(new Rectangle(5, 4));
+
+//To Be Modified
 increaseDimension(new Square(5));
 increaseDimension(new Rectangle(5, 5));
