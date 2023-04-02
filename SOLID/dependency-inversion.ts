@@ -59,3 +59,19 @@ class PaypalPaymentProcessor implements PaymentProcessor {
     this.paypal.makePayment(this.user, amountInDollars);
   }
 }
+
+class Store {
+  paymentProcessor: PaymentProcessor;
+
+  constructor(payMentProcessor: PaymentProcessor) {
+    this.paymentProcessor = payMentProcessor;
+  }
+
+  purchaseBat(quantity: number) {
+    this.paymentProcessor.pay(200 * quantity);
+  }
+
+  purchaseBall(quntity: number) {
+    this.paymentProcessor.pay(20 * quntity);
+  }
+}
