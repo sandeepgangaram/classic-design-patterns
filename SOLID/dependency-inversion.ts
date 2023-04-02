@@ -72,6 +72,15 @@ class Store {
   }
 
   purchaseBall(quntity: number) {
-    this.paymentProcessor.pay(20 * quntity);
+    this.paymentProcessor.pay(15 * quntity);
   }
 }
+
+const store = new Store(new PaypalPaymentProcessor("Sachin"));
+store.purchaseBall(20);
+store.purchaseBat(2);
+
+console.log("******");
+
+const anotherStore = new Store(new StripePaymentProcessor("Dravid"));
+anotherStore.purchaseBat(5);
