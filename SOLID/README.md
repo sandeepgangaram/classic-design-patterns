@@ -14,4 +14,6 @@ The SOLID principles are a set of five design principles for writing clean and m
 
 By following these principles, developers can write code that is easier to understand, test, and maintain over time.
 
+### Summary by - chatGPT
+
 ## Happy coding
